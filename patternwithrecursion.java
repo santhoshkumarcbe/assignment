@@ -1,3 +1,5 @@
+// pattern using recursion
+
 public class patternwithrecursion {
     public static void main (String[]args){
         int n=Integer.valueOf(args[0]);
