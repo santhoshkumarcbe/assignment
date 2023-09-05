@@ -1,3 +1,4 @@
+package inheritance;
 public class rectangle extends shape{
     float length;
     float width;

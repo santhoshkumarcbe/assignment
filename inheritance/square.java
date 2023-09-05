@@ -1,3 +1,4 @@
+package inheritance;
 public class square extends shape{
     float length;
 

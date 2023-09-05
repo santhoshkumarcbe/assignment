@@ -1,3 +1,4 @@
+package inheritance;
 public class circle extends shape {
 float radius;
     
