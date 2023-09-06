@@ -1,3 +1,6 @@
+// import java.util.InputMismatchException;
+
+
 
 interface calculator {
     float add(float a,float b);
@@ -5,11 +8,62 @@ interface calculator {
     float mul(float a,float b);
     float div(float a,float b);
    
+   
 } 
 
 
-
 class calculate implements calculator{
+    
+    
+
+    class Inputformat extends Exception{
+        public Inputformat(String aware){
+            super(aware);
+        }
+
+    }
+
+    class getter {
+    String s1;
+    String s2;
+    char operation;
+    float a;
+    float b;
+    boolean check=true;
+         public void getInput(String[] args){   
+         
+
+    
+
+        try{
+            s1=args[0];
+            s2=args[2];
+            operation=(args[1]).charAt(0);
+            a=Integer.valueOf(s1);
+            b=Integer.valueOf(s2);
+             
+        }
+
+        catch(ArrayIndexOutOfBoundsException ex){
+            check=false;
+            System.out.println("Please enter number in the format  ' number <space> operation <space> number '");
+        }
+
+        catch (NumberFormatException ex1){
+            check=false;
+             System.out.println("Input should be in the format ' number<space> operation <space> number '");
+           
+        }
+    }
+
+       
+    }
+
+
+   
+
+
+     
 
     public float add(float a,float b){
         return a+b;
@@ -24,39 +78,49 @@ class calculate implements calculator{
      }
 
     public float div(float a,float b){
-        if(b==0){
-            System.out.println("number cannot be divided by zero");
-            return 0;
-        }
-        else{
+      
         return a/b;
-        }
+        
      }
 
-     public static void main (String []args){
-        float a=Integer.valueOf(args[0]);
-        float b=Integer.valueOf(args[2]);
-        char operation=(args[1]).charAt(0);
+
+
+     
+
+     public static void main (String []args) throws calculate.Inputformat{
 
         calculate c= new calculate();
+        final getter cc = c.new getter();
 
-        if(operation=='+'){
-            System.out.println(c.add(a, b));     
+       
+       
+
+        
+
+        // calculate c= new calculate();
+        char operator=cc.operation;
+        float a1=Integer.valueOf(cc.s1);
+        float b1=Integer.valueOf(cc.s2);
+
+    
+        if(operator=='+'){
+            System.out.println(c.add(a1, b1));     
         }
-        if(operation=='-'){
-            System.out.println(c.sub(a, b));
+        if(operator=='-'){
+            System.out.println(c.sub(a1, b1));
             
         }
-        if(operation=='*'){
-            System.out.println(c.mul(a, b));
+        if(operator=='*'){
+            System.out.println(c.mul(a1, b1));
             
         }
-        if(operation=='/'){
-            System.out.println(c.div(a, b));  
+        if(operator=='/'){
+            System.out.println(c.div(a1, b1));  
         }
 
 
      }
+
 
      
    
