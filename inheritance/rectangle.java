@@ -15,6 +15,7 @@ public class rectangle extends shape{
         float l=Integer.valueOf(t);
         float w=Integer.valueOf(t1);
         rectangle r = new rectangle(l, w);
+        System.out.println("The given rectangle is of length "+r.length +" with width "+r.width);
     }
     
 }

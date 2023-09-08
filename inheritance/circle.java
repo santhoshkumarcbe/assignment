@@ -12,6 +12,7 @@ float radius;
         String t=args[0];
         float radius=Integer.valueOf(t);
         circle c= new circle(radius);
+        System.out.println("Radius of the circle "+c.radius);
     }
     
 }

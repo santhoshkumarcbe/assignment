@@ -26,8 +26,8 @@ public class square extends shape{
         float length=Integer.valueOf(t);
 
         square s= new square(length);
-
-       
+        System.out.println("Length of square is "+s.length);
+        
         
       
         
