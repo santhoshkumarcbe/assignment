@@ -5,7 +5,7 @@ public class example {
     
      
     public static void main(String[] args) {
-        int a=0;
+        int a=75%100 ;
         Integer b=5;
     boolean c=true;
     String s="44";
@@ -17,6 +17,7 @@ public class example {
         System.out.println("String s ="+s);
         System.out.println("int d ="+d);
         System.out.println("string s1="+s1);
+        System.out.println(a);
 
     }
 

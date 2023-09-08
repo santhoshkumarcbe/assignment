@@ -1,7 +1,16 @@
 package Blackjack;
 
+
 import java.util.ArrayList;
 import java.util.Random;
+
+//  interface InterfaceDeck {
+//     public void createFullDeck();
+//     public void Shuffle();
+
+    
+// }
+
 
 public class Deck {
     private ArrayList<Card> cards;
@@ -25,7 +34,7 @@ public class Deck {
         int randomCardIndex=0;
         int originalSize=this.cards.size();
         for(int i=0;i<originalSize;i++){
-            // generate random index random.next((max-min)+1)+min;
+            // generate random index random.nextInt((max-min)+1)+min;
             randomCardIndex = random.nextInt((this.cards.size()-1-0)+1)+0;
             tmpDeck.add(this.cards.get(randomCardIndex));
             this.cards.remove(randomCardIndex);
@@ -36,7 +45,7 @@ public class Deck {
     public String toString(){
         String cardListOutput ="";
         for(Card aCard : this.cards){
-            cardListOutput+= "\n"   +aCard.toString();
+            cardListOutput+= "\n"   +aCard.toString() + "-";
             
         }
         return cardListOutput;
@@ -80,7 +89,7 @@ public class Deck {
     }
 
     // return total value of cards in deck
-    public int cardsValue(){
+    public int cardsValue(int winVal){
         int totalvalue=0;
         int aces=0;
 
@@ -103,7 +112,7 @@ public class Deck {
         }
 
         for(int i=0;i<aces;i++){
-            if(totalvalue>10){
+            if(totalvalue> winVal / 2){
                 totalvalue+=1;
             }
             else
