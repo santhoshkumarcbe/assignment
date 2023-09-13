@@ -4,22 +4,19 @@ package Blackjack;
 import java.util.ArrayList;
 import java.util.Random;
 
-//  interface InterfaceDeck {
-//     public void createFullDeck();
-//     public void Shuffle();
-
-    
-// }
-
-
 public class Deck {
-    private ArrayList<Card> cards;
+    
+      private ArrayList<Card> cards;
+      //constructor
 
-    //constructor
+      // time complexity O(1)
+// space complexity O(1)
     public Deck(){
         this.cards= new ArrayList<Card>();
     }
 
+    // time complexity O(nlogn)
+// space complexity O(n)
     public void createFullDeck(){
         for(Suit cardSuit:Suit.values()){
             for(Value cardValue:Value.values()){
@@ -28,6 +25,8 @@ public class Deck {
         }
     }
 
+    // time complexity O(n)
+// space complexity O(1)
     public void Shuffle(){
         ArrayList<Card> tmpDeck = new ArrayList<Card>();
         Random random = new Random();
@@ -74,6 +73,8 @@ public class Deck {
         return this.cards.size();
     }
 
+    // time complexity O(n)
+// space complexity O(1)
     public void moveAllToDeck(Deck moveTo){
 
         int thisDeckSize=this.cards.size();
@@ -89,6 +90,8 @@ public class Deck {
     }
 
     // return total value of cards in deck
+    // time complexity O(n)
+// space complexity O(1)
     public int cardsValue(int winVal){
         int totalvalue=0;
         int aces=0;

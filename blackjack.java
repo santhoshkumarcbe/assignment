@@ -25,6 +25,8 @@ public class blackjack {
         Scanner userinput = new Scanner(System.in);
 
         // game loop
+// time complexity O(n)
+// space complexity O(1)
         while(playerMoney>0){
             //play on
             // bet
@@ -48,11 +50,6 @@ public class blackjack {
             System.out.println("Enter the winning Target ");
             int winValue=userinput.nextInt();
             winVal=winValue;
-
-            // playerDeck.cardsValue(winVal) <=winValue
-            // do{
-
-            // }
 
             do{
                 System.out.println("Your hand :" +playerDeck.toString());
@@ -119,7 +116,6 @@ public class blackjack {
                 playerMoney+=playerbet;
                 // System.out.println("You have "+playerMoney );
                 endRound=true;
-
             }
 
             //determine if push 
@@ -142,9 +138,6 @@ public class blackjack {
             playerDeck.moveAllToDeck(playingDeck);
             dealerDeck.moveAllToDeck(playingDeck);
             System.out.println("End of hand. ");
-             
-            
-
         }
 
         System.out.println("Game over ! You are out of jack coins ");
