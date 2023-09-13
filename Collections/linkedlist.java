@@ -92,15 +92,24 @@ public class linkedlist {
     public static linkedlist remove(linkedlist list,int data){
         Node removNode=list.head;
         int check=0;
-        do{
+        boolean run=true;
+
+        while(run){
             if(removNode.data==data){
+                if(removNode.next!=null){
                 removNode.data=removNode.next.data;
                 removNode.next=removNode.next.next;
                 check++;
+                }
+                else{
+                    list.head=null;
+                }
             }
+            if(removNode.next!=null)
             removNode=removNode.next;
+            else run=false;
         }
-        while(removNode.next!=null);
+        
 
         if(check==0){
             System.out.println(data + " is not present in linkedlist ");
@@ -129,6 +138,47 @@ public class linkedlist {
             System.out.println(data + " is not present in the list");
         }
     }
+    public static void swap(linkedlist list ,int position1,int position2){
+        Node nodeP1=list.head;
+        Node nodeP2=list.head;
+        Node prevP1=null;
+        Node prevP2=null;
+        boolean execute=true;
+        for(int i=0;i<position1;i++){
+            if(nodeP1.next!=null){
+            prevP1=nodeP1;
+            nodeP1=nodeP1.next;
+            }
+            else{
+                System.out.println("index Position 1 is greater than linked list size "+(i+1));
+                execute=false;
+                break;
+            }
+        }
+        for(int i=0;i<position2;i++){
+            if(nodeP2.next!=null){
+                prevP2=nodeP2;
+                nodeP2=nodeP2.next;
+            }
+            else{
+                System.out.println("index Position 2 is greater than linked list size "+ (i+1));
+                execute=false;
+                break;
+            }
+        }
+
+        if(execute){
+        Node tempNode= new Node(position2);
+        tempNode.next=nodeP1.next;
+        nodeP1.next=nodeP2.next;
+        nodeP2.next=tempNode.next;
+        if(prevP1!=null) prevP1.next=nodeP2;
+        else list.head=nodeP2;
+
+        if(prevP2!=null) prevP2.next=nodeP1;  
+        else list.head=nodeP1;
+        }
+    }
 
     public static void traverse(linkedlist list){
         Node curNode=list.head;
@@ -146,6 +196,7 @@ public class linkedlist {
         while(run){
         System.out.println("Enter a number to perform : \n (1) add \n (2) remove \n (3) remove Head node in the list \n (4) traverse \n (5) Insert at position ");
         System.out.println(" (6) Find an element \n" + //
+                           " (7) swap two elements \n" + 
                            " (0) exit ");
         int n=userinput.nextInt();
         switch (n) {
@@ -161,7 +212,6 @@ public class linkedlist {
                 System.out.println();
                 break;
             }
-
             case 2 :{
                 System.out.println("Enter an element value to remove from linked list");
                 int e=userinput.nextInt();
@@ -199,6 +249,17 @@ public class linkedlist {
                 System.out.println("Enter an element to find");
                 int d=userinput.nextInt();
                 findelement(l, d);
+                traverse(l);
+                System.out.println();
+                break;
+            }
+
+            case 7 :{
+                System.out.println("Enter postion 1");
+                int p1=userinput.nextInt();
+                System.out.println("Enter postion 2");
+                int p2=userinput.nextInt();
+                swap(l, p1, p2);
                 traverse(l);
                 System.out.println();
                 break;
