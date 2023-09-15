@@ -34,7 +34,6 @@ public class linkedlist {
         Node currentNode=list.head;
         Node prevNode=null;
         int count=0;
-        boolean insert=false;
         if(currentNode==null){
             if(position==0){
                 list.head=insertNode;
@@ -51,19 +50,19 @@ public class linkedlist {
                 insertNode.next=tempNode;
                 if(position==0){
                     list.head=insertNode;
+                    break;
                 }
                 else
                 prevNode.next=currentNode;
-                insert=true;
                 break;
             }
                 prevNode=currentNode;
                 currentNode=currentNode.next;
-                count++;
-            
-        }
-        if(!insert){
-            System.out.println("Please enter valid position");
+                count++; 
+                if(currentNode==null && (count+1) <= position){
+                    System.out.println("Please enter valid position");
+                    break;
+                }   
         }
     }
         return list;
@@ -91,27 +90,41 @@ public class linkedlist {
 
     public static linkedlist remove(linkedlist list,int data){
         Node removNode=list.head;
-        int check=0;
+        Node prevNode=null;
+        boolean removed=false;
         boolean run=true;
 
         while(run){
             if(removNode.data==data){
                 if(removNode.next!=null){
-                removNode.data=removNode.next.data;
-                removNode.next=removNode.next.next;
-                check++;
+                    if(prevNode!=null){
+                        prevNode.next=removNode.next;
+                        removed=true;
+                        break;
+                    }
+                    else{
+                        list.head=removNode.next;
+                        removed=true;
+                        break;
+                    }    
                 }
                 else{
-                    list.head=null;
+                    if(prevNode!=null){
+                        prevNode.next=null;
+                    }
+                    else list.head=null;
+                    removed=true;
+                    break;
                 }
             }
-            if(removNode.next!=null)
-            removNode=removNode.next;
+            if(removNode.next!=null){
+                prevNode=removNode;
+                removNode=removNode.next;
+            }
+            
             else run=false;
         }
-        
-
-        if(check==0){
+        if(!removed){
             System.out.println(data + " is not present in linkedlist ");
             }
         return list;  
@@ -174,7 +187,6 @@ public class linkedlist {
         nodeP2.next=tempNode.next;
         if(prevP1!=null) prevP1.next=nodeP2;
         else list.head=nodeP2;
-
         if(prevP2!=null) prevP2.next=nodeP1;  
         else list.head=nodeP1;
         }
