@@ -103,7 +103,9 @@ public class linkedlist {
                         break;
                     }
                     else{
+                        // if(removNode.next!=null)
                         list.head=removNode.next;
+                        // else list.head=null;
                         removed=true;
                         break;
                     }    
@@ -156,7 +158,6 @@ public class linkedlist {
         Node nodeP2=list.head;
         Node prevP1=null;
         Node prevP2=null;
-        boolean execute=true;
         for(int i=0;i<position1;i++){
             if(nodeP1.next!=null){
             prevP1=nodeP1;
@@ -164,7 +165,6 @@ public class linkedlist {
             }
             else{
                 System.out.println("index Position 1 is greater than linked list size "+(i+1));
-                execute=false;
                 break;
             }
         }
@@ -175,21 +175,31 @@ public class linkedlist {
             }
             else{
                 System.out.println("index Position 2 is greater than linked list size "+ (i+1));
-                execute=false;
                 break;
             }
         }
 
-        if(execute){
-        Node tempNode= new Node(position2);
-        tempNode.next=nodeP1.next;
-        nodeP1.next=nodeP2.next;
-        nodeP2.next=tempNode.next;
-        if(prevP1!=null) prevP1.next=nodeP2;
-        else list.head=nodeP2;
-        if(prevP2!=null) prevP2.next=nodeP1;  
-        else list.head=nodeP1;
+         Node tempNode1= new Node(position2);
+         Node tempNode2=new Node(position2);
+         tempNode1.next=nodeP2.next;
+        //  if(nodeP1.next!=nodeP2)
+         tempNode2.next=nodeP1.next;
+        //  else if(nodeP2.next!=null){
+        //     tempNode2.next=nodeP2;
+        //  }
+        // nodeP1.next=nodeP2.next;
+        // nodeP2.next=tempNode.next;
+        if(prevP1!=null){
+            prevP1.next=nodeP2;
+            nodeP2.next=tempNode2.next;
         }
+        else list.head=nodeP2;
+        if(prevP2!=null){
+            prevP2.next=nodeP1;
+            nodeP1.next=tempNode1.next;
+        } 
+        else list.head=nodeP1;
+        
     }
 
     public static void traverse(linkedlist list){

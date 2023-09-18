@@ -49,8 +49,6 @@ public class circularlinkedlist extends linkedlist {
         } 
             return list;   
         }
-    
-
 
     public static circularlinkedlist reverse(circularlinkedlist list){
         Node currNode=list.head;
@@ -89,8 +87,6 @@ public class circularlinkedlist extends linkedlist {
         System.out.println();
     }
 
-
-
     public static void main(String[] args) {
         circularlinkedlist cl=new circularlinkedlist();
         Scanner userinput = new Scanner(System.in);
@@ -115,7 +111,7 @@ public class circularlinkedlist extends linkedlist {
                     break;
                 }
                 case 2 :{
-                    System.out.println("Enter an element value to remove from linked list");
+                    System.out.println("Enter an element value to remove from circular linkedlist");
                     int e=userinput.nextInt();
                     remove(cl, e);
                     traverse(cl);
@@ -125,6 +121,9 @@ public class circularlinkedlist extends linkedlist {
                 case 3 :{
                     traverse(cl);
                     break;
+                }
+                default:{
+                    System.out.println("Please enter a valid number");
                 }
         }
     }
