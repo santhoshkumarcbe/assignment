@@ -1,54 +1,58 @@
+
 import java.util.ArrayList;
 import java.util.Scanner;
+public class queue {
+    public static ArrayList<Integer> queue=new ArrayList<Integer>();
+    static int size = -1;
 
-public class stack {
-    public static ArrayList<Integer> stack=new ArrayList<Integer>();
-    static int top = -1;
-    public static stack push(stack s,int data){
-        stack.add(data);
-        top+=1;
-        return s;
-    }
-
-    public static stack pop(stack s){
-        stack.remove(stack.size()-1);
-        top--;
-        return s;
-    }
-
-    public static void peek(stack s){
-        if(!isEmpty(s)){
-        int d=stack.get(stack.size()-1);
-        System.out.println("The peek value of the stack is "+d);
+    public static queue push(queue q,int data){
+        size++;
+        queue.add(data);
+        int i=0;
+        int t=data;
+        while(i<=size){
+            int t1=queue.get(i);
+            queue.set(i,t);
+            t=t1;
+            i++;
         }
+        
+        return q;
+}
+    
+
+    public static queue pop(queue q){
+        if(isEmpty(q))
+        System.out.println("Queue is Empty");
         else{
-            System.out.println("The stack is Empty");
+        queue.remove(size);
+        size--;
         }
+        return q;
     }
 
-    public static boolean isEmpty(stack s){
-        if(top==-1)
-        return true;
-        else
-        return false;
+    public static void peek(queue q){
+        System.out.println("Peek value of the queue is " +queue.get(size));
     }
 
-    public static void traverse(stack s){
-        if(isEmpty(s)){
-            System.out.println("Your Stack is empty ");
+    public static boolean isEmpty(queue q){
+        if(size== -1) return true;
+        else return false;
+    }
+
+    public static void traverse(queue q){
+        System.out.print("Your Queue: ");
+        if(size== -1){
+            System.out.print("is empty");
         }
-        else{
-        System.out.println("Your Stack : ");
-        for(int d:stack){
-            System.out.print(d+ " ");
+        for(int data :queue){
+            System.out.print(data+" ");
         }
         System.out.println();
     }
-    
-}
-    
+
     public static void main(String[] args) {
-        stack s=new stack();
+        queue q=new queue();
         Scanner userinput = new Scanner(System.in);
             boolean run=true;
             while(run){
@@ -65,36 +69,34 @@ public class stack {
                     run=false;
                     break;
                 }
-
                 case 1:{
                     System.out.println("Enter a number to insert");
                     int e=userinput.nextInt();
-                    push(s, e);
-                    traverse(s);
+                    push(q, e);
+                    traverse(q);
                     break;
                 }
                 case 2:{
-                    pop(s);
-                    traverse(s);
+                    pop(q);
+                    traverse(q);
                     break;
                 }
                 case 3:{
-                    peek(s);
+                    peek(q);
                     break;
                 }
                 case 4:{
-                    System.out.println(isEmpty(s));
+                    System.out.println(isEmpty(q));
                     break;
                 }
                 case 5:{
-                    traverse(s);
+                    traverse(q);
                     break;
                 }
                 default :{
                     System.out.println("Please enter a valid input");
                     break;
                 }
-
             }
         }
         userinput.close();
