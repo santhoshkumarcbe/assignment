@@ -56,6 +56,7 @@ public static void main(String[] args) {
     System.out.println("Enter the maximum number of replacement");
     int k=userinput.nextInt();
     System.out.println("The longest substring containing the same letter after replacements is of length "+characterReplacement( s, k));
+    userinput.close();
     
 }
     
