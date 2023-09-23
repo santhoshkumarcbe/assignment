@@ -2,13 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class N_array_tree{
-    Node root;
-    int n;
-    ArrayList<Node> traverse = new ArrayList<>();
-    N_array_tree(int n){
-        this.n=n;
-        root=null;
-    }
+  
     public static class Node{
         int data;
         ArrayList<Node> children;
@@ -19,102 +13,19 @@ public class N_array_tree{
         }
     }
 
-    static N_array_tree add(N_array_tree t,int data){
-        Node parentNode=t.root;
-        Node newNode=new Node(data);
-        Node currentNode=t.root;
-        int breadth=0;
-        if(currentNode==null){
-            t.root=newNode;
-            t.traverse.add(newNode);
-            // return ;
-        }
-        else{
-            while(true){
-                if(currentNode.children.size()<t.n){
-                    currentNode.children.add(newNode);
-                    t.traverse.add(newNode);
-                    break;
-                }
-                else if(currentNode.children.size()==t.n){
-                    currentNode=parentNode.children.get(breadth);
-                    breadth++;
-                }
-                
-                if(breadth==t.n+1){
-                    // if(s<n){
-                    // breadth=0;
-                    // currentNode=parentNode.children.get(s).children.get(breadth);
-                    // s++;
-                    // }
-                    // else
-                    System.out.println("Tree size limit reached max");
-                    break;
-                }
-            }
-            
-        }
-        return t;
+    static void add(N_array_tree t,int data){
 
-
-
-
-        
     }
 
     static void traverse(N_array_tree t){
-        System.out.println("Your tree");
-        for (Node traversNode : t.traverse) {
-            System.out.print(traversNode.data+ " ");
-        }
-        System.out.println();
+      
     }
-        // int b=0;
-        // int r=0;
-        // System.out.println("Your Tree");
-        // if(t.root==null){
-        //     System.out.println("Tree is empty");
-        // }
-        // else if(parentNode.children.size()==0){
-        //     System.out.println(parentNode.data);
-        // }
-        // else{
-        //     int i=0;
-        //     while (true) { 
-        //         while(i<parentNode.children.size()){
-        //         System.out.print(traverseNode.data + " ");
-        //         traverseNode=parentNode.children.get(i);
-        //         i++;
-        //         }
-        //         if(b<parentNode.children.size()){
-        //             parentNode=parentNode.children.get(b);
-        //             b++;
-        //             i=0;
-        //         }
-        //         else{
-        //             break;
-        //         }
-                
-                // if(b<t.n && traverseNode!=parentNode && parentNode.children.size()!=0){
-                //     traverseNode=parentNode.children.get(b);
-                //     b++;
-                // }
-                
-                // else if(b==t.n){
-                //     b=0;
-                //     parentNode=parentNode.children.get(r);
-                //     r++;
-                //     traverseNode=parentNode.children.get(b);
-                //     b++;
-                // }
-
-                // else if(parentNode.children.size()-1 ==b) break;
+        
                 
     public static void main(String[] args) {
         Scanner userinput=new Scanner(System.in);
         System.out.println("Enter the maximum N_array");
         int n1=userinput.nextInt();
-        N_array_tree t= new N_array_tree(n1);
         
         boolean run=true;
         while(run){

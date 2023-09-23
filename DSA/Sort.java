@@ -1,7 +1,7 @@
 import java.util.*;
 public class Sort {
     static int tc=0;
-
+    
     public static void quicksort(ArrayList<Integer> arr,int s,int e){
         int i=s-1;
         // try with pivot = (s+e)/2;
@@ -49,7 +49,6 @@ public class Sort {
        
     }
 
-
     public static void split(ArrayList<Integer> arr,int s, int e){
         int m;
         if(s<e){
@@ -57,9 +56,9 @@ public class Sort {
         split(arr, s, m);
         split(arr, m+1, e);
         mergesort(arr, s, e);
-        }
-       
+        }    
     }
+
     public static void mergesort(ArrayList<Integer> arr,int s, int e){
         int c=s;
         int m=(s+e)/2;

@@ -1,7 +1,9 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class linkedlist {
-    Node head;
+     Node head;
 
     static class Node{
         int data;
@@ -12,6 +14,39 @@ public class linkedlist {
             data=n;
             next=null;
         }
+    }
+
+     public static void reorderList(Node head) {
+        // leetcode reorder list
+        ArrayList<Node> list=new ArrayList<>();
+        Node current=head;
+        boolean logic=true;
+        while(current.next!=null){
+            list.add(current.next);
+            current=current.next;
+        }
+        current=head;
+        while(list.size()>0){
+            if(logic){
+                current.next=list.get(list.size()-1);
+                list.remove(list.size()-1);
+                logic=false;
+                current=current.next;
+                if(list.size()==0){
+                    current.next=null;
+                }
+            }
+            else{
+                current.next=list.get(0);
+                list.remove(list.get(0));
+                logic=true;
+                current=current.next;
+                if(list.size()==0){
+                    current.next=null;
+                }
+            }
+        }
+        
     }
 
     public static linkedlist add(linkedlist list,int data){
@@ -219,6 +254,7 @@ public class linkedlist {
         System.out.println("Enter a number to perform : \n (1) add \n (2) remove \n (3) remove Head node in the list \n (4) traverse \n (5) Insert at position ");
         System.out.println(" (6) Find an element \n" + //
                            " (7) swap two elements \n" + 
+                           " (8) reorder list \n" +
                            " (0) exit ");
         int n=userinput.nextInt();
         switch (n) {
@@ -286,10 +322,18 @@ public class linkedlist {
                 System.out.println();
                 break;
             }
+
+            case 8 :{
+                reorderList(l.head);
+                traverse(l);
+                System.out.println();
+                break;
+            }
         
-            default:
+            default:{
                 System.out.println("Give proper input");
                 break;
+            }
         }
     }
         userinput.close();
