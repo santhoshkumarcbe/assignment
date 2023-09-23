@@ -9,24 +9,70 @@ public class N_array_tree{
 
         Node(int data){
             this.data=data;
-             children=new ArrayList<>();
+            children=new ArrayList<>();
         }
     }
 
-    static void add(N_array_tree t,int data){
-
+    static Node insert(int data){
+        Node rootNode=new Node(data);
+        return rootNode;
     }
 
-    static void traverse(N_array_tree t){
-      
+    static void add(Node currentNode){
+        Scanner in=new Scanner(System.in);
+        boolean run=true;
+        while (run) {
+            System.out.println("Do you like to add child to node "+currentNode.data);
+            System.out.println("Enter (1) to add else Enter (2)");
+            int d=in.nextInt();
+            if(d==1){
+                    System.out.println("Enter child node value");
+                    currentNode.children.add(new Node(in.nextInt()));
+                }
+            else{
+                    if(!currentNode.children.isEmpty()){
+                        for (int i = 0; i < currentNode.children.size(); i++) {
+                            add(currentNode.children.get(i));
+                        }
+                        
+                    }
+                    run=false;
+                    
+                }
+        }
+        
+    }
+
+    static void traverse(Node currentNode){
+      boolean run=true;
+      while (run) {
+         if (currentNode.children.isEmpty()) {
+                        run=false;
+                        break;
+                    }
+                    else{
+                        for (int i = 0; i < currentNode.children.size(); i++) {
+                            System.out.print(currentNode.children.get(i).data +" ");
+                        }
+                        for (int i = 0; i < currentNode.children.size(); i++) {
+                            traverse(currentNode.children.get(i));
+                        }
+                        run=false;
+                        break;
+                    }
+      }
+      System.out.println();
+    }
+
+    static void height(Node currentNode){
+        
     }
         
                 
     public static void main(String[] args) {
         Scanner userinput=new Scanner(System.in);
-        System.out.println("Enter the maximum N_array");
-        int n1=userinput.nextInt();
-        
+        System.out.println("Enter the root node value to create");
+        Node rootNode=new Node(userinput.nextInt());
         boolean run=true;
         while(run){
             System.out.println("Enter a number to perform");
@@ -40,10 +86,16 @@ public class N_array_tree{
                     break;
                 }
                 case 1:{
-                    System.out.println("Enter a number to insert");
-                    int e=userinput.nextInt();
-                    add(t,e);
-                    traverse(t);
+                    add(rootNode);
+                    System.out.println("Your tree");
+                    System.out.print(rootNode.data +" ");
+                    traverse(rootNode);
+                    break;
+                }
+                case 2:{
+                    System.out.println("Your tree");
+                    System.out.print(rootNode.data +" ");
+                    traverse(rootNode);
                     break;
                 }
                 default :{
