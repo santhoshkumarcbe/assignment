@@ -73,6 +73,44 @@ public class N_array_tree{
             System.out.println(h);
         }
     }
+
+    static void dfs_postorder_traverse(Node currentNode){
+        boolean run=true;
+        while (run) {
+            if (currentNode.children.isEmpty()) {
+                run=false;
+                break;
+            }
+            else{
+                for (int i = 0; i < currentNode.children.size(); i++) {
+                    dfs_postorder_traverse(currentNode.children.get(i));
+                    System.out.print(currentNode.children.get(i).data +" ");
+                }
+                // System.out.print(currentNode.data +" ");
+                run=false;
+                break;
+            }
+
+        }
+    }
+
+    static void dfs_preorder_traverse(Node currentNode){
+        boolean run=true;
+        while (run) {
+            if (currentNode.children.isEmpty()) {
+                run=false;
+                break;
+            }
+            else{
+                for (int i = 0; i < currentNode.children.size(); i++) {
+                    System.out.print(currentNode.children.get(i).data +" ");
+                    dfs_preorder_traverse(currentNode.children.get(i));
+                }
+                run=false;
+                break;
+            }
+        }
+    }
         
                 
     public static void main(String[] args) {
@@ -83,8 +121,10 @@ public class N_array_tree{
         while(run){
             System.out.println("Enter a number to perform");
             System.out.println("(1) add");
-            System.out.println("(2) traverse");
+            System.out.println("(2) BFS traverse");
             System.out.println("(3) height");
+            System.out.println("(4) DFS pre-order traverse");
+            System.out.println("(5) DFS post-order traverse");
             System.out.println("(0) exit");
             int n=userinput.nextInt();
                 switch (n){
@@ -94,14 +134,14 @@ public class N_array_tree{
                 }
                 case 1:{
                     add(rootNode);
-                    System.out.println("Your tree");
+                    System.out.println("BFS traverse tree");
                     System.out.print(rootNode.data +" ");
                     traverse(rootNode);
                     System.out.println();
                     break;
                 }
                 case 2:{
-                    System.out.println("Your tree");
+                    System.out.println("BFS traverse tree");
                     System.out.print(rootNode.data +" ");
                     traverse(rootNode);
                     System.out.println();
@@ -109,6 +149,20 @@ public class N_array_tree{
                 }
                 case 3:{
                     height(rootNode, 0);
+                    break;
+                }
+                case 4 :{
+                    System.out.println("DFS Pre order traverse tree");
+                    System.out.print(rootNode.data +" ");
+                    dfs_preorder_traverse(rootNode);
+                    System.out.println();
+                    break;
+                }
+                case 5:{
+                    System.out.println("DFS Post order traverse tree");
+                    dfs_postorder_traverse(rootNode);
+                    System.out.print(rootNode.data +" ");
+                    System.out.println();
                     break;
                 }
                 default :{
