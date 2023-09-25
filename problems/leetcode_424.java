@@ -26,27 +26,6 @@ public class leetcode_424 {
             right++;
         }
         return maxlen;
-        // ArrayList<Character> c= new ArrayList<>();
-        // int max=0;
-        // int res=0;
-        // int l=0;
-        // int r=k;
-        // int n=s.length();
-        // boolean run=true;
-        // while(run){
-        //   for(int i=l;i<=r;i++){
-        //     freq.put(s.charAt(i),freq.getOrDefault(s.charAt(i),0)+1);
-        //   }
-        // }
-        // for(int i=0;i<n;i++){
-        //   if(c.Contains(s.charAt(i))){
-
-        //   }
-        //   else{
-        //     c.add(s.charAt(i));
-        //   }
-        // }
-        // return 4;
     }
 
 

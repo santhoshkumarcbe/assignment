@@ -61,11 +61,17 @@ public class N_array_tree{
                         break;
                     }
       }
-      System.out.println();
     }
 
-    static void height(Node currentNode){
-        
+    static void height(Node currentNode,int h){
+        h++;
+        if (!currentNode.children.isEmpty()) {
+            currentNode=currentNode.children.get(0);
+            height(currentNode, h);
+        }
+        else{
+            System.out.println(h);
+        }
     }
         
                 
@@ -78,6 +84,7 @@ public class N_array_tree{
             System.out.println("Enter a number to perform");
             System.out.println("(1) add");
             System.out.println("(2) traverse");
+            System.out.println("(3) height");
             System.out.println("(0) exit");
             int n=userinput.nextInt();
                 switch (n){
@@ -90,12 +97,18 @@ public class N_array_tree{
                     System.out.println("Your tree");
                     System.out.print(rootNode.data +" ");
                     traverse(rootNode);
+                    System.out.println();
                     break;
                 }
                 case 2:{
                     System.out.println("Your tree");
                     System.out.print(rootNode.data +" ");
                     traverse(rootNode);
+                    System.out.println();
+                    break;
+                }
+                case 3:{
+                    height(rootNode, 0);
                     break;
                 }
                 default :{
