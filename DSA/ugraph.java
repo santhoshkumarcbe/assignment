@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class dgraph {
+public class ugraph {
     static class Node {
         int data;
         ArrayList<Node> nextnodes;
