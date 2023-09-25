@@ -111,6 +111,25 @@ public class N_array_tree{
             }
         }
     }
+
+    static boolean find(Node rootNode, int data){
+        Node currentNode=rootNode;
+        boolean identified=false;
+        if (currentNode.data==data) {
+            return true;
+        }
+        else{
+         if (!currentNode.children.isEmpty()) {
+            for (int i = 0; i < currentNode.children.size(); i++) {
+                if(find(currentNode.children.get(i),data)){
+                    identified=true;
+                }
+            }
+            }
+        }
+        return identified;
+    }
+
         
                 
     public static void main(String[] args) {
@@ -125,6 +144,7 @@ public class N_array_tree{
             System.out.println("(3) height");
             System.out.println("(4) DFS pre-order traverse");
             System.out.println("(5) DFS post-order traverse");
+            System.out.println("(6) find node ");
             System.out.println("(0) exit");
             int n=userinput.nextInt();
                 switch (n){
@@ -163,6 +183,17 @@ public class N_array_tree{
                     dfs_postorder_traverse(rootNode);
                     System.out.print(rootNode.data +" ");
                     System.out.println();
+                    break;
+                }
+                case 6:{
+                    System.out.println("Enter the node value");
+                    if(find(rootNode, userinput.nextInt())){
+                        System.out.println("Node is present");
+                    }
+                    else{
+                        System.out.println("Node not found");
+                        System.out.println("Press (1) to add");
+                    }
                     break;
                 }
                 default :{
