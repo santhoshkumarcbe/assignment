@@ -49,24 +49,23 @@ public class ugraph {
         return true;
     }
 
-    static Node find(Node currentNode, int data){
-        Node identified=null;
+    static Node find(Node currentNode,int data,ArrayList<Node> t){
+        boolean f=false;
+       if(!t.contains(currentNode)){
         if (currentNode.data==data) {
+            f=true;
             return currentNode;
         }
-        else{
-         if (!currentNode.nextnodes.isEmpty()) {
-            for (int i = 0; i < currentNode.nextnodes.size(); i++) {
-                Node temp=find(currentNode.nextnodes.get(i),data);
-                if(temp!=null){
-                if(temp.data==data){
-                    identified=temp;
-                }
-            }
-            }
-            }
+        for (int i = 0; i < currentNode.nextnodes.size(); i++) {
+            find(currentNode.nextnodes.get(i), data, t);
+            break;
         }
-        return identified;
+       }
+       if (f)
+        return currentNode;
+        else
+        return null;
+       
     }
 
     public static void main(String[] args) {
@@ -88,31 +87,32 @@ public class ugraph {
                 break;
             }
             case 1: {
+                ArrayList<Node> t = new ArrayList<>();
                 System.out.println("Enter node value to insert");
                 Node insertNode=new Node(userinput.nextInt());
                 System.out.println("Enter Origin node value");
-                Node t=find(rootNode, userinput.nextInt());
-                if(t!=null)
-                add(t, insertNode);
+                Node tempNode=find(rootNode, userinput.nextInt(),t);
+                t.clear();
+                if(tempNode!=null){
+                    add(tempNode, insertNode);
+                    traversewithnext(tempNode, t);
+                }
+                
                 else
                 System.out.println("Invalid origin node");
                 break;
             }
             case 2:{
                 ArrayList<Node> t=new ArrayList<>();
-                // System.out.println("Enter origin node to traverse");
-                // Node t1=find(rootNode, userinput.nextInt());
-                // if(t1!=null)
                 traversewithnext(rootNode, t);
-                // else
-                // System.out.println("Origin node not found in graph");
                 System.out.println();
                 break;
             }
             case 3:{
                 ArrayList<Node> tarr=new ArrayList<>();
                 System.out.println("Enter origin node to traverse");
-                Node t1=find(rootNode, userinput.nextInt());
+                ArrayList<Node> t=new ArrayList<>();
+                Node t1=find(rootNode, userinput.nextInt(),t);
                 if(t1!=null)
                 traverse(t1,tarr);
                 else
@@ -121,7 +121,8 @@ public class ugraph {
                 break;
             }
             case 4:{
-                Node t=find(rootNode, userinput.nextInt());
+                ArrayList<Node> t1=new ArrayList<>();
+                Node t=find(rootNode, userinput.nextInt(),t1);
                 if(t!=null)
                 System.out.println(t.data + " is present in the graph");
             }

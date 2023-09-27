@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -47,6 +48,49 @@ public class linkedlist {
             }
         }
         
+    }
+
+    public static Node mergeklist(Node[] lists){
+        // 23. Merge k Sorted Lists
+        // https://leetcode.com/problems/merge-k-sorted-lists/description/
+
+        ArrayList<Node> arr=new ArrayList<>(Arrays.asList(lists));
+        Node head=arr.get(0);
+        Node s=null;
+        boolean start=true;
+       while(arr.size()>0){
+           int i=1;
+           boolean c=false;
+           while(i<arr.size()){
+               if(head.data>=arr.get(i).data){
+                   head=arr.get(i);
+                   c=true;
+                   if(arr.get(i).next!=null){
+                       arr.set(i,arr.get(i).next);
+                   }
+                   else{
+                       arr.remove(arr.get(i));
+                   }
+               }  
+               i++;
+           }
+           if(start){
+               s=head;
+               start=false;
+           }
+           if(c)
+           head.next=arr.get(0);
+           else if(arr.get(0).next!=null){
+               head.next=arr.get(0).next;
+               arr.set(0,arr.get(0).next);
+           }
+           else if(arr.get(0).next==null){
+               arr.remove(arr.get(0));
+               if(!arr.isEmpty())
+               head.next=arr.get(0);  
+           }
+           }
+           return s;
     }
 
     public static linkedlist add(linkedlist list,int data){
@@ -255,6 +299,7 @@ public class linkedlist {
         System.out.println(" (6) Find an element \n" + //
                            " (7) swap two elements \n" + 
                            " (8) reorder list \n" +
+                           " (9) Merge K lists \n" +
                            " (0) exit ");
         int n=userinput.nextInt();
         switch (n) {
@@ -328,6 +373,39 @@ public class linkedlist {
                 traverse(l);
                 System.out.println();
                 break;
+            }
+
+            case 9:{
+                System.out.println("Enter number of linked lists");
+                int n1=userinput.nextInt();
+                Node[] lists = new Node[n1];
+                for (int i = 0; i < lists.length; i++) {
+                    System.out.println("Enter head node value for linkedlist "+i);
+                    Node tempNode=new Node(userinput.nextInt());
+                    lists[i]=tempNode;
+                    boolean execute=true;
+                    while(execute){
+                        System.out.println("Enter (1) to add next node else Enter (2) ");
+                        int n2=userinput.nextInt();
+                        if (n2==1) {
+                            System.out.println("Enter next node value");
+                            Node nextNode=new Node(userinput.nextInt());
+                            tempNode.next=nextNode;
+                            tempNode=tempNode.next;
+                        }
+                        else{
+                            execute=false;
+                        }
+                    }
+                }
+                Node curNode=mergeklist(lists);
+                System.out.println("Your singly sorted Linkedlist :");
+                while(curNode!=null){
+                System.out.print(curNode.data +" ");
+                curNode=curNode.next;
+        }
+        System.out.println();
+        break;
             }
         
             default:{
