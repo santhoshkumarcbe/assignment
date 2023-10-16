@@ -1,0 +1,152 @@
+use instagram
+
+db.createCollection("user")
+
+db.user.insertMany([{userid:"user1",email:"user1@gmail.com"},{userid:"user2",email:"user2@gmail.com"},{userid:"user3",email:"user3@gmail.com"},{userid:"user4",email:"user4@gmail.com"}])
+
+db.user.updateMany({},{$set:{verified:"true",phonenumber:987654321,DOB:"01/01/1999",pwd:"0000"}})
+
+db.getCollectionNames()
+
+db.createCollection("page")
+
+db.page.insertMany([{page_name:"user1 name"},{page_name:"user2 name"},{page_name:"user3 name"},{page_name:"user4 name"}])
+
+db.page.updateMany({},{$set:{bio:"this is bio",dp:"this is dp",avatar:"this is avatar",page_privacy:"public"}})
+
+db.createCollection("followdetails")
+
+db.followdetails.insertMany([{user_id:ObjectId("652cc2e733bf87644f5fd563"),follower:"user2",following:"user2"},{user_id:ObjectId("652cc2e733bf87644f5fd563"),follower:"user3",following:"user3"},{user_id:ObjectId("652cc2e733bf87644f5fd563"),follower:"user4",following:"user4"}])
+
+db.followdetails.insertMany([{user_id:ObjectId("652cc2e733bf87644f5fd564"),follower:"user1",following:"user1"},{user_id:ObjectId("652cc2e733bf87644f5fd564"),follower:"user3",following:"user3"},{user_id:ObjectId("652cc2e733bf87644f5fd564"),follower:"user4",following:"user4"}])
+
+db.followdetails.insertMany([{user_id:ObjectId("652cc2e733bf87644f5fd565"),follower:"user1",following:"user1"},{user_id:ObjectId("652cc2e733bf87644f5fd565"),follower:"user2",following:"user2"},{user_id:ObjectId("652cc2e733bf87644f5fd565"),follower:"user4"}])
+
+db.followdetails.insertMany([{user_id:ObjectId("652cc2e733bf87644f5fd566"),follower:"user1",following:"user1"},{user_id:ObjectId("652cc2e733bf87644f5fd566"),follower:"user2",following:"user2"},{user_id:ObjectId("652cc2e733bf87644f5fd566"),following:"user3"}])
+
+db.user.aggregate([{$lookup:{from:"followdetails",localField:"_id",foreignField:"user_id",as:"followdetail"}}])
+
+db.createCollection("chat")
+
+db.chat.insertMany([{user_id:ObjectId("652cc2e733bf87644f5fd563"),to:"user2",message:"hai user2",media:"image",reaction:"like"},{user_id:ObjectId("652cc2e733bf87644f5fd564"),to:"user1",message:"hello user1",media:"image",reaction:"love"}])
+
+db.chat.updateMany({},{$set:{vanish_mode:"false",setting:"chat setting",time:"12:01",read_time:"12:01",chat_type:"individual",admin:""}})
+
+db.chat.find()
+
+db.device.insertMany([{user_id:ObjectId("652cc2e733bf87644f5fd563"),device_name:"device1",device_location:"location1",login_time:"11:48 - 16/10/2023",logout_time:'',cookie:"this is user1 device1 cookies"},{user_id:ObjectId("652cc2e733bf87644f5fd564"),device_name:"device1",device_location:"location2",login_time:"11:48 -16/10/2023",logout_time:'',cookie:"this is user2 device1 cookies"},{user_id:ObjectId("652cc2e733bf87644f5fd564"),device_name:"device2",device_location:"location3",login_time:"11:48 -16/10/2023",logout_time:'',cookie:"this is user2 device2 cookies"},{user_id:ObjectId("652cc2e733bf87644f5fd565"),device_name:"device1",device_location:"location3",login_time:"11:48 - 16/10/2023",logout_time:'',cookie:"this is user3 device1 cookies"},{user_id:ObjectId("652cc2e733bf87644f5fd566"),device_name:"device1",device_location:"location4",login_time:"11:48 - 16/10/2023",logout_time:'',cookie:"this is user4 device1 cookies"}])
+
+db.user.aggregate([{$lookup:{from:"device",localField:"_id",foreignField:"user_id",as:"devices"}}])
+
+db.createCollection("content")
+
+db.content.insertMany([{user_id:ObjectId("652cc2e733bf87644f5fd563"),content_media:"image url",media_type:"image",music_id:'',views:3,like:2,caption:"This is caption from content",date_time:"16/10/2023 - 12:49 PM",location:"content location",music_timestamp:"1.03 - 1.33"},{user_id:ObjectId("652cc2e733bf87644f5fd564")},{user_id:ObjectId("652cc2e733bf87644f5fd565")},{user_id:ObjectId("652cc2e733bf87644f5fd566")}])
+
+db.content.updateMany({},{$set:{content_type:"post"}})
+
+db.content.updateMany({},{$set:{media_type:"image"}})
+
+db.content.updateMany({},{$set:{tag_id:"userid1,userid2"}}) 
+
+db.content.updateMany({},{$set:{hashtag:"#hashtag,#post"}})
+
+db.user.aggregate([{$lookup:{from:"content",localField:"_id",foreignField:"user_id",as:"content"}}])
+
+db.story.insertMany([{content_id:ObjectId("652ce50f33bf87644f5fd57b"),element1:"gif",coordinates1:"(5,3,43)",views:"user2,user3,user4",location_coordinates:"0,1,0",music_coordinates:"0,0,0"},{content_id:ObjectId("652ce50f33bf87644f5fd57c"),element1:"gif",coordinates1:"5,3,43",views:"user1,user3,user4",location_coordinates:"0,1,0",music_coordinates:"0,0,0"},{content_id: ObjectId("652ce50f33bf87644f5fd57d"),element1:"gif",coordinates1:"5,3,43",views:"user1,user3,user4",location_coordinates:"0,1,0",music_coordinates:"0,0,0"},{content_id: ObjectId("652ce50f33bf87644f5fd57e"),element1:"gif",coordinates1:"5,3,43",views:"user1,user3,user4",location_coordinates:"0,1,0",music_coordinates:"(0,0,0)"}])
+
+db.content.aggregate([{$lookup:{from:"story",localField:"_id",foreignField:"content_id",as:"story"}}])
+
+db.createCollection("likes")
+
+db.likes.insertMany([{content_id:ObjectId("652ce50f33bf87644f5fd57b"),like_by:"user2,user3",comment_id:'',comment_like_by:''},{content_id:ObjectId("652ce50f33bf87644f5fd57c"),like_by:"user2,user3",comment_id:'',comment_like_by:''},{content_id:ObjectId("652ce50f33bf87644f5fd57d"),like_by:"user1,user3",comment_id:'',comment_like_by:''},{content_id:ObjectId("652ce50f33bf87644f5fd57e"),like_by:"user2,user4",comment_id:'',comment_like_by:''}]) 
+
+db.likes.insertMany([{content_id:ObjectId("652cf4ee33bf87644f5fd57f"),like_by:"user2,user3",comment_id:'',comment_like_by:''},{content_id:ObjectId("652cf4ee33bf87644f5fd580"),like_by:"user1,user3",comment_id:'',comment_like_by:''},{content_id:ObjectId("652cf4ee33bf87644f5fd581"),like_by:"user2,user4",comment_id:'',comment_like_by:''},{content_id:ObjectId("652cf4ee33bf87644f5fd582"),like_by:"user2,user4",comment_id:'',comment_like_by:''}])
+
+db.likes.find()
+
+db.content.aggregate([{$lookup:{from:"likes",localField:"_id",foreignField:"content_id",as:"likes"}}])
+
+db.likes.find()
+
+db.likes.updateOne({_id: ObjectId("652cf4ee33bf87644f5fd57f")},{$rename:{"content_id":"story_id"}})
+
+db.likes.updateOne({_id:ObjectId("652cfbe133bf87644f5fd588")},{$rename:{"content_id":"story_id"}})
+
+db.likes.updateOne({_id:ObjectId("652cfbe133bf87644f5fd589")},{$rename:{"content_id":"story_id"}})
+
+db.likes.updateOne({_id:ObjectId("652cfbe133bf87644f5fd58a")},{$rename:{"content_id":"story_id"}})
+
+db.likes.find()
+
+db.content.aggregate([{$lookup:{from:"likes",localField:"_id",foreignField:"content_id",as:"likes"}}])
+
+db.story.aggregate([{$lookup:{from:"likes",localField:"_id",foreignField:"story_id",as:"likes"}}])
+
+db.createCollection("music")
+
+db.music.insertMany([{music_name:"music 1"},{music_name:"music 2"},{music_name:"music 3"},{music_name:"music 4"}])
+
+db.music.updateMany({},{$set:{album:"album name",audio:"audio url",artists:"singers name",lyrics:"song lyrics",thumbnail:"song thumbnail",title:"song title"}})
+
+db.music.updateOne({music_name:"music 1"},{$set:{content_id:ObjectId("652ce50f33bf87644f5fd57b")}})
+
+db.music.updateOne({music_name:"music 2"},{$set:{content_id:ObjectId("652ce50f33bf87644f5fd57c")}})
+
+db.music.updateOne({music_name:"music 3"},{$set:{content_id:ObjectId("652ce50f33bf87644f5fd57d")}})
+
+db.music.updateOne({music_name:"music 4"},{$set:{content_id:ObjectId("652ce50f33bf87644f5fd57e")}})
+
+db.music.updateOne({music_name:"music 4"},{$set:{story_id:ObjectId("652ce50f33bf87644f5fd57f")}})
+
+db.music.updateOne({music_name:"music 3"},{$set:{story_id:ObjectId("652cf4ee33bf87644f5fd580")}})
+
+db.music.updateOne({music_name:"music 2"},{$set:{story_id:ObjectId("652cf4ee33bf87644f5fd581")}})
+
+db.music.updateOne({music_name:"music 1"},{$set:{story_id:ObjectId("652cf4ee33bf87644f5fd582")}})
+
+db.content.aggregate([{$lookup:{from:"music",localField:"_id",foreignField:"content_id",as:"music"}}])
+
+db.story.aggregate([{$lookup:{from:"music",localField:"_id",foreignField:"story_id",as:"music"}}])
+
+db.createCollection("Save")
+
+db.save.insertMany([{content_id:ObjectId("652ce50f33bf87644f5fd57b"),collabwith:"user2,user3",collectionname:'collection name'},{content_id:ObjectId("652ce50f33bf87644f5fd57c"),collabwith:"user4",collectionname:'collection name'},{content_id:ObjectId("652ce50f33bf87644f5fd57d"),collabwith:"user4,user1",collectionname:'collection name'},{content_id:ObjectId("652ce50f33bf87644f5fd57d"),collabwith:"user3",collectionname:'collection name'}]) 
+
+db.save.insertOne({content_id:ObjectId("652ce50f33bf87644f5fd57e"),collabwith:"user3",collectionname:'collection name'})
+
+db.content.aggregate([{$lookup:{from:"save",localField:"_id",foreignField:"content_id",as:"saved"}}])
+
+db.save.updateMany({_id:ObjectId("652d10a733bf87644f5fd58f")},{$set:{created_by:'user1'}})
+
+db.save.updateMany({_id:ObjectId("652d10a733bf87644f5fd590")},{$set:{created_by:'user2'}})
+
+db.save.updateMany({_id:ObjectId("652d10a733bf87644f5fd591")},{$set:{created_by:'user3'}})
+
+db.save.updateMany({_id:ObjectId("652d10a733bf87644f5fd592")},{$set:{created_by:'user3'}})
+
+db.save.updateMany({_id:ObjectId("652d123133bf87644f5fd593")},{$set:{created_by:'user4'}})
+
+db.content.aggregate([{$lookup:{from:"save",localField:"_id",foreignField:"content_id",as:"saved"}}])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
