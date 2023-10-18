@@ -128,6 +128,29 @@ db.save.updateMany({_id:ObjectId("652d123133bf87644f5fd593")},{$set:{created_by:
 
 db.content.aggregate([{$lookup:{from:"save",localField:"_id",foreignField:"content_id",as:"saved"}}])
 
+db.user.createIndex({userid:-1,email:1})
+
+db.content.insertMany([{user_id:ObjectId("652cc2e733bf87644f5fd563"),content_media:"image url",media_type:"image",music_id:'',views:3,like:2,caption:"This is caption from content",date_time:"18/10/2023 - 12:12 PM",location:"content location",music_timestamp:"0.05 - 0.35",content_type:"story"},{user_id:ObjectId("652cc2e733bf87644f5fd564"),content_type:"story"},{user_id:ObjectId("652cc2e733bf87644f5fd565"),content_type:"story"},{user_id:ObjectId("652cc2e733bf87644f5fd566"),content_type:"story"}])
+
+db.content.updateMany({location:{$exists:false}},{$set:{content_media:"image url",media_type:"image",music_id:'',views:3,like:2,caption:"This is caption from content",date_time:"18/10/2023 - 12:12 PM",location:"content location",music_timestamp:"0.05 - 0.35"}}) 
+
+db.story.updateOne({content_id:ObjectId('652ce50f33bf87644f5fd57b')},{$set:{content_id:ObjectId('652f7f215207bc3032857f38')}})
+
+db.story.updateOne({content_id:ObjectId('652ce50f33bf87644f5fd57c')},{$set:{content_id:ObjectId('652f7f215207bc3032857f39')}})
+
+db.story.updateOne({content_id:ObjectId('652ce50f33bf87644f5fd57d')},{$set:{content_id:ObjectId('652f7f215207bc3032857f3a')}})
+
+db.story.updateOne({content_id:ObjectId('652ce50f33bf87644f5fd57e')},{$set:{content_id:ObjectId('652f7f215207bc3032857f3b')}})
+
+db.content.updateMany({},{$set:{content_media:"media url"}})
+
+db.content.updateOne({},{$set:{content_type:"reels"}})
+
+db.content.aggregate([{$group:{_id:null,count:{$sum:1}}},{$project:{_id:0}}])
+
+// find the number of posts user have in content collection
+db.content.aggregate([{$match: {user_id: { $in: [ObjectId("652cc2e733bf87644f5fd563"), ObjectId("652cc2e733bf87644f5fd564")] }}},{$group: {_i_id: "$user_id",count: { $sum: 1 }}}])
+
 
 
 
