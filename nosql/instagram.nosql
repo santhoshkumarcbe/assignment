@@ -199,6 +199,42 @@ db.content.updateOne({ _id: ObjectId("652ce50f33bf87644f5fd57e") },{$push: {comm
 db.content.aggregate([{ $group: { _id: "$user_id", totalLikes: { $sum: "$like" }, totalComments: { $sum: { $cond: [{ $ifNull: ["$comments", false] }, { $size: { $ifNull: ["$comments", []] } }, 0] } }, totalCommentLikes: { $sum: { $sum: { $map: { input: "$comments", as: "c", in: { $size: { $ifNull: ["$$c.comment_likes.user_id", []] } } } } } }, totalViews: { $sum: "$views" } } }, { $project: { user_id: "$_id", totalLikes: 1, totalComments: 1, totalCommentLikes: 1, totalViews: 1, totalScore: { $sum: ["$totalLikes", "$totalComments", "$totalCommentLikes", "$totalViews"] } } }, { $sort: { totalScore: -1 } }, { $out: "popular_user_rank" }])
 
 
+// add the reply_comment object to the specified comment with the corresponding user_id
+
+db.content.updateOne({ _id: ObjectId("652ce50f33bf87644f5fd57c"), "comments.user_id": ObjectId("652cc2e733bf87644f5fd563") }, { $push: { "comments.$.reply_comment": { user_id: ObjectId("652cc2e733bf87644f5fd564"), reply_text: "thank you", reply_comment_likes:{ user_id:[ ObjectId('652cc2e733bf87644f5fd563'), ObjectId('652cc2e733bf87644f5fd565') ]}, comment_date: new Date(Date.parse("2023-10-20T12:28:34+05:30")) } } })
+
+db.content.updateOne({ _id: ObjectId("652ce50f33bf87644f5fd57e"), "comments.user_id": ObjectId("652cc2e733bf87644f5fd564") }, { $push: { "comments.$.reply_comment": { user_id: ObjectId("652cc2e733bf87644f5fd566"), reply_text: "thank u bro", reply_comment_likes:{ user_id:[ ObjectId('652cc2e733bf87644f5fd564'), ObjectId('652cc2e733bf87644f5fd565') ]}, comment_date: new Date(Date.parse("2023-10-20T01:20:34+05:30")) } } })
+
+db.content.updateOne({ _id: ObjectId("652ce50f33bf87644f5fd57e"), "comments.user_id": ObjectId("652cc2e733bf87644f5fd564") }, { $push: { "comments.$.reply_comment": { user_id: ObjectId("652cc2e733bf87644f5fd563"), reply_text: "good to see", reply_comment_likes:{ user_id:[ ObjectId('652cc2e733bf87644f5fd564'), ObjectId('652cc2e733bf87644f5fd566') ]}, comment_date: new Date(Date.parse("2023-10-20T01:37:34+05:30")) } } })
+
+db.content.updateMany({user_id:ObjectId('652cc2e733bf87644f5fd563')},{$set:{like:{user_id:[ObjectId('652cc2e733bf87644f5fd563'),ObjectId('652cc2e733bf87644f5fd564')]}}})
+
+db.content.updateMany({user_id:ObjectId('652cc2e733bf87644f5fd563')},{$set:{views:{user_id:[ObjectId('652cc2e733bf87644f5fd564'),ObjectId('652cc2e733bf87644f5fd565'),ObjectId('652cc2e733bf87644f5fd566')]}}})
+
+db.content.updateMany({user_id:ObjectId('652cc2e733bf87644f5fd564')},{$set:{like:{user_id:[ObjectId('652cc2e733bf87644f5fd563'),ObjectId('652cc2e733bf87644f5fd565')]}}})
+
+db.content.updateMany({user_id:ObjectId('652cc2e733bf87644f5fd564')},{$set:{views:{user_id:[ObjectId('652cc2e733bf87644f5fd563'),ObjectId('652cc2e733bf87644f5fd565'),ObjectId('652cc2e733bf87644f5fd566')]}}})
+
+db.content.updateMany({user_id:ObjectId('652cc2e733bf87644f5fd565')},{$set:{like:{user_id:[ObjectId('652cc2e733bf87644f5fd564'),ObjectId('652cc2e733bf87644f5fd566')]}}})
+
+db.content.updateMany({user_id:ObjectId('652cc2e733bf87644f5fd565')},{$set:{views:{user_id:[ObjectId('652cc2e733bf87644f5fd563'),ObjectId('652cc2e733bf87644f5fd564'),ObjectId('652cc2e733bf87644f5fd566'),ObjectId('652e337eb5239ebd756922ba')]}}})
+
+db.content.updateMany({user_id:ObjectId('652cc2e733bf87644f5fd566')},{$set:{like:{user_id:[ObjectId('652cc2e733bf87644f5fd564'),ObjectId('652cc2e733bf87644f5fd565'),ObjectId('652e337eb5239ebd756922ba')]}}})
+
+db.content.updateMany({user_id:ObjectId('652cc2e733bf87644f5fd566')},{$set:{views:{user_id:[ObjectId('652cc2e733bf87644f5fd563'),ObjectId('652cc2e733bf87644f5fd564'),ObjectId('652cc2e733bf87644f5fd565'),ObjectId('652e337eb5239ebd756922ba')]}}})
+
+
+// add score to each user based on likes,views,comments (popularity) after updating like and views to array
+
+db.content.aggregate([{ $project: { user_id: 1, totalLikes: { $size: { $ifNull: ["$like.user_id", []] } }, totalComments: { $sum: [{ $size: { $ifNull: ["$comments", []] } }, { $size: { $ifNull: ["$comments.reply_comment", []] } }] }, totalCommentLikes: { $sum: { $map: { input: "$comments", as: "c", in: { $sum: [{ $size: { $ifNull: ["$$c.comment_likes.user_id", []] } }, { $size: { $ifNull: ["$$c.reply_comment.reply_comment_likes.user_id", []] } }] } } } }, totalViews: { $size: { $ifNull: ["$views.user_id", []] } } } }, { $project: { user_id: 1, totalLikes: 1, totalComments: 1, totalCommentLikes: 1, totalViews: 1, totalScore: { $sum: ["$totalLikes", "$totalComments", "$totalCommentLikes", "$totalViews"] } } }, { $sort: { totalScore: -1 } }, { $out: "popular_user_rank" }])
+
+// interaction bw users 
+// query not accurate
+db.content.aggregate([{ $match: { comments: { $exists: true, $not: { $size: 0 } } } },{ $unwind: "$comments" },{ $group: { _id: { user1: "$user_id", user2: "$comments.user_id" }, totalInteractions: { $sum: { $add: [ { $size: { $ifNull: ["$like.user_id", []] } }, { $size: { $ifNull: ["$comments.comment_likes.user_id", []] } }, { $size: { $ifNull: ["$views.user_id", []] } } ] } } } },{ $project: { user1: "$_id.user1", user2: "$_id.user2", totalInteractions: 1 } },{ $sort: { totalInteractions: -1 } }])
+
+
+
+
 
 
 

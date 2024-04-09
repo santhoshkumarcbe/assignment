@@ -1,0 +1,66 @@
+db.content.aggregate([
+  { $lookup: { from: "user", localField: "user_id", foreignField: "_id", as: "user1"
+    }
+  },
+  { $lookup: { from: "user", localField: "user_id", foreignField: "_id", as: "user2"
+    }
+  },
+  { $unwind: "$user1"
+  },
+  { $unwind: "$user2"
+  },
+  { $group: { _id: "$user1._id", user1: { $first: "$user1"
+      }, totalLikes: { $sum: { $cond: [
+            { $and: [
+                { $isArray: "$like.user_id"
+                },
+                { $in: [
+                    "$user2._id",
+                    "$like.user_id"
+                  ]
+                }
+              ]
+            },
+            1,
+            0
+          ]
+        }
+      }, totalComments: { $sum: { $cond: [
+            { $and: 
+            
+            [
+                { $isArray: "$comments.user_id"
+                },
+                { $in: [
+                    "$user2._id",
+                    "$comments.user_id"
+                  ]
+                }
+              ]
+            },
+            1,
+            0
+          ]
+        }
+      }, totalViews: { $sum: { $cond: [
+            { $and: [
+                { $isArray: "$views.user_id"
+                },
+                { $in: [
+                    "$user2._id",
+                    "$views.user_id"
+                  ]
+                }
+              ]
+            },
+            1,
+            0
+          ]
+        }
+      }
+    }
+  },
+  { $project: { user1: 1, totalLikes: 1, totalComments: 1, totalViews: 1
+    }
+  }
+])

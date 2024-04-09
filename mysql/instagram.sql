@@ -3,7 +3,7 @@ use instagram;
 create table users(
 user_id varchar(10) primary key,
 email varchar(20),
-verified bool,
+verified boolean,
 phnumber varchar(10),
 DOB varchar(20),
 pwd text
